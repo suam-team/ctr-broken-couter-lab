@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CTR Broken Couter Lab">
+    <meta name="author" content="Bongtrop">
+
+    <title>CTR Broken Couter Lab</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <link href="/static/css/main.css" rel="stylesheet" media="all">
+</head>
+
+<body>
+    <div class="page-wrapper bg-dark p-t-100 p-b-50">
+        <div class="wrapper wrapper--w900">
+            <div class="card card-6">
+                <div class="card-heading">
+                    <h2 class="title">CTR Broken Couter Lab</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-row">
+                            <div class="name">Encrypt Message</div>
+                            <div class="value">
+                                <input class="input--style-6" type="text" name="plaintext" id="txt-plaintext">
+                                <button class="btn btn--radius-2 btn--blue-2" id="btn-encrypt" type="button">Encrypt</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Decrypt Message</div>
+                            <div class="value">
+                                <input class="input--style-6" type="text" name="ciphertext" id="txt-ciphertext">
+                                <button class="btn btn--radius-2 btn--blue-2" id="btn-decrypt" type="button">Decrypt</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let btnEncrypt = document.querySelector("#btn-encrypt");
+        let txtPlaintext = document.querySelector("#txt-plaintext");
+        btnEncrypt.addEventListener("click", e => {
+            fetch('/encrypt?plaintext=' + encodeURI(txtPlaintext.value))
+            .then(response => response.text()) 
+            .then(data => {alert(data)});
+        });
+
+        let btnDecrypt = document.querySelector("#btn-decrypt");
+        let txtCiphertext = document.querySelector("#txt-ciphertext");
+        btnDecrypt.addEventListener("click", e => {
+            fetch('/decrypt?ciphertext=' + encodeURI(txtCiphertext.value))
+            .then(response => response.text()) 
+            .then(data => {alert(data)});
+        });
+        
+    </script>
+</body>
+</html>
