@@ -9,24 +9,25 @@ KEY = os.environ.get("KEY") or os.urandom(32)
 app = Flask(__name__)
 
 class Encryptor(object):
-    def __init__(self, key, nonce):
-        self.nonce = nonce[:15]
+    def __init__(self, key):
         self.key = key
     
     def encrypt(self, plaintext):
-        self._reset()
+        nonce = os.urandom(15)
+        self._reset(nonce)
         key = AES.new(self.key, AES.MODE_CTR, counter=self.counter)
-        return self.nonce.hex() + key.encrypt(plaintext.encode()).hex()
+        return nonce.hex() + key.encrypt(plaintext.encode()).hex()
     
     def decrypt(self, ciphertext):
-        self._reset()
+        ciphertext = bytes.fromhex(ciphertext)
+        self._reset(ciphertext[:15])
         key = AES.new(self.key, AES.MODE_CTR, counter=self.counter)
-        return key.decrypt(bytes.fromhex(ciphertext)).decode()
+        return key.decrypt(ciphertext[15:]).decode()
     
-    def _reset(self):
-        self.counter = Counter.new(nbits=8, prefix=self.nonce, initial_value=0, little_endian=False, allow_wraparound=True)
+    def _reset(self, nonce):
+        self.counter = Counter.new(nbits=8, prefix=nonce, initial_value=0, little_endian=False, allow_wraparound=True)
 
-
+encryptor = Encryptor(KEY)
 
 @app.route('/encrypt')
 def encrypt():
@@ -35,16 +36,12 @@ def encrypt():
     if not plaintext or len(plaintext) == 0:
         return "Something wents wrong"
     
-    nonce = os.urandom(15)
-    encryptor = Encryptor(KEY, nonce)
     return encryptor.encrypt(plaintext + FLAG)
 
 @app.route('/decrypt')
 def decrypt():
     ciphertext = request.args.get("ciphertext")
-    nonce = bytes.fromhex(ciphertext[:30])
-    ciphertext = ciphertext[30:]
-    encryptor = Encryptor(KEY, nonce)
+
     plaintext = encryptor.decrypt(ciphertext) 
     if not plaintext.endswith(FLAG):
         return "Something wents wrong"
