@@ -2,6 +2,10 @@
 
 The hacking lab for broken couter in CTR mode.
 
+## Let Play
+
+Please hack this lab on your own environment. And then, get a real flag [HERE!](https://ctr-broken-couter-lab.herokuapp.com/).
+
 ## Running Locally
 
 Make sure you have Python 3.7 [installed locally](http://install.python-guide.org). To push to Heroku, you'll need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
