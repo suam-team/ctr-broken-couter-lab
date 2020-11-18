@@ -39,7 +39,7 @@ def decrypt():
     if not plaintext.endswith(FLAG):
         return "Something wents wrong"
     else:
-        return encryptor.decrypt(ciphertext)[:-len(FLAG)]
+        return plaintext[:-len(FLAG)]
 
 @app.route('/')
 def index():
