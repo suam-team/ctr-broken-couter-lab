@@ -2,6 +2,6 @@
     "name": "CTR Broken Couter Lab",
     "description": "The hacking lab for broken couter in CTR mode.",
     "repository": "https://github.com/suam-team/ctr-broken-couter-lab",
-    "logo": "https://suam.wtf/images/landing.png",
+    "logo": "https://suam.wtf/favicon-32x32.png",
     "keywords": ["hacking", "lab", "crypto"]
 }
