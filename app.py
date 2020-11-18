@@ -32,6 +32,10 @@ encryptor = Encryptor(KEY, NONCE)
 @app.route('/encrypt')
 def encrypt():
     plaintext = request.args.get("plaintext")
+    
+    if not plaintext or len(plaintext) == 0:
+        return "Something wents wrong"
+    
     return encryptor.encrypt(plaintext + FLAG)
 
 @app.route('/decrypt')
