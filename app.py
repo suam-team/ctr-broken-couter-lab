@@ -4,6 +4,8 @@ from Crypto.Util import Counter
 import os
 
 FLAG = os.environ.get("FLAG") or "PLEASE_SET_A_FLAG"
+KEY = os.environ.get("KEY") or os.urandom(32)
+NONCE = os.environ.get("KEY") or os.urandom(15)
 
 app = Flask(__name__)
 
@@ -25,7 +27,7 @@ class Encryptor(object):
     def _reset(self):
         self.counter = Counter.new(nbits=8, prefix=self.nonce, initial_value=0, little_endian=False, allow_wraparound=True)
 
-encryptor = Encryptor(os.urandom(32), os.urandom(15))
+encryptor = Encryptor(KEY, NONCE)
 
 @app.route('/encrypt')
 def encrypt():
