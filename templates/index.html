@@ -48,7 +48,7 @@
         let btnEncrypt = document.querySelector("#btn-encrypt");
         let txtPlaintext = document.querySelector("#txt-plaintext");
         btnEncrypt.addEventListener("click", e => {
-            fetch('/encrypt?plaintext=' + encodeURI(txtPlaintext.value))
+            fetch('/encrypt', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: 'plaintext=' + encodeURI(txtPlaintext.value)})
             .then(response => response.text()) 
             .then(data => {alert(data)});
         });
@@ -56,7 +56,7 @@
         let btnDecrypt = document.querySelector("#btn-decrypt");
         let txtCiphertext = document.querySelector("#txt-ciphertext");
         btnDecrypt.addEventListener("click", e => {
-            fetch('/decrypt?ciphertext=' + encodeURI(txtCiphertext.value))
+            fetch('/decrypt', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: 'ciphertext=' + encodeURI(txtCiphertext.value)})
             .then(response => response.text()) 
             .then(data => {alert(data)});
         });

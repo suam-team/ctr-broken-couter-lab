@@ -29,18 +29,18 @@ class Encryptor(object):
 
 encryptor = Encryptor(KEY)
 
-@app.route('/encrypt')
+@app.route('/encrypt', methods=['POST'])
 def encrypt():
-    plaintext = request.args.get("plaintext")
-    
+    plaintext = request.form.get('plaintext')
+
     if not plaintext or len(plaintext) == 0:
         return "Something wents wrong"
     
     return encryptor.encrypt(plaintext + FLAG)
 
-@app.route('/decrypt')
+@app.route('/decrypt', methods=['POST'])
 def decrypt():
-    ciphertext = request.args.get("ciphertext")
+    ciphertext = request.form.get('ciphertext')
 
     plaintext = encryptor.decrypt(ciphertext) 
     if not plaintext.endswith(FLAG):
