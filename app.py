@@ -46,7 +46,7 @@ def decrypt():
     if not plaintext.startswith(FLAG):
         return "Something wents wrong"
     else:
-        return plaintext[:-len(FLAG)]
+        return plaintext[len(FLAG):]
 
 @app.route('/')
 def index():
